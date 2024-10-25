@@ -92,7 +92,6 @@ export default function DepositTable() {
     }
 
     const viewDetail = (details) => {
-        console.log(details)
         setIsOpen(true);
         setModalData(details)
     }
