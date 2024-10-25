@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
      */
     Route::get('/pending', [PendingController::class, 'pending'])->name('pending');
     Route::get('/getPendingData', [PendingController::class, 'getPendingData'])->name('getPendingData');
+    Route::post('/approveWithdrawal', [PendingController::class, 'approveWithdrawal'])->name('approveWithdrawal');
+    Route::post('/rejectWithdrawal', [PendingController::class, 'rejectWithdrawal'])->name('rejectWithdrawal');
 
 
     /**

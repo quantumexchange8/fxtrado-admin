@@ -6,6 +6,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 // import { EinbillLogo } from "@/Components/Icon/logo";
 import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, PendingIcon, SaleReportIcon, XIcon } from "./Icon/outline";
+import { LogoIcon, SmallLogoIcon } from "./Icon/Brand";
 
 export default function SideBar({ user, showingNavigationDropdown, expanded, toggleSidebar }) {
 
@@ -22,11 +23,11 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                 <nav className="flex flex-col gap-6">
                     {!expanded ? (
                         <div >
-                            {/* <EinbillLogo width="44" height="44"/> */}
+                            <SmallLogoIcon  />
                         </div>
                     ) : (
                         <div className="flex justify-between items-center">
-                            {/* <EinbillLogo width="44" height="44"/> */}
+                            <LogoIcon className="bg-black rounded-lg" />
                             <div className="block md:hidden" onClick={toggleSidebar}>
                                 <XIcon />
                             </div>

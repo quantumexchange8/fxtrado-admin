@@ -6,6 +6,7 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import SideBar from '@/Components/Sidebar';
 import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import { CustomToaster } from '@/Components/CustomToaster';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -38,6 +39,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="min-h-screen bg-neutral-100">
+            <CustomToaster />
             <SideBar expanded={isSidebarExpanded} user={user} showingNavigationDropdown={showingNavigationDropdown} toggleSidebar={toggleSidebar}></SideBar>
 
             <div className={`min-h-screen flex flex-col ${isSidebarExpanded ? 'md:ml-60' : 'translate-x-0 md:ml-[74px]'}`}>

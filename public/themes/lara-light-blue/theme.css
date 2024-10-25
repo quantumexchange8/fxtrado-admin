@@ -6311,3 +6311,7 @@
 .p-datatable .p-datatable-tbody > tr:hover {
   background-color: #f8fafa;
 }
+
+.p-datatable-table {
+  margin-bottom: 12px;
+}

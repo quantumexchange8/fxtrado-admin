@@ -49,7 +49,7 @@ export default function Pending() {
                         </InputIconWrapper>
                     </div>
                     <div className="flex md:flex-row gap-3 md:w-auto">
-                        <div className="w-full md:w-auto">
+                        {/* <div className="w-full md:w-auto">
                             <Button
                                 variant='gray-border'
                                 size="lg"
@@ -61,7 +61,7 @@ export default function Pending() {
                                 </div>
                                 <span className="text-sm font-medium hidden xl:block">Export</span>
                             </Button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 

@@ -9,6 +9,10 @@ import Button from "@/Components/Button";
 import { QRCode } from 'react-qrcode-logo';
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
+import { useForm } from "@inertiajs/react";
+import InputError from "@/Components/InputError";
+import toast from "react-hot-toast";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 
 export default function PendingTable() {
 
@@ -16,6 +20,8 @@ export default function PendingTable() {
     const [isOpen, setIsOpen] = useState(false);
     const [modalData, setModalData] = useState(false);
     const [pendingData, setPendingData] = useState([]);
+    const [selectedId, setSelectedId] = useState(null);
+    const [remark, setRemark] = useState('');
 
     const getPendingData = async () => {
         try {
@@ -44,13 +50,53 @@ export default function PendingTable() {
 
     const approveModal = (action) => {
         setIsOpen(true);
-        console.log('Modal should open', isOpen);
         setModalData(action)
 
     }
 
     const closeApproveModal = () => {
         setIsOpen(false);
+    }
+
+    const cancelReject = () => {
+        setRemark('');
+    }
+
+    const reject = async () => {
+        try {
+            await axios.post('/rejectWithdrawal', {
+                id: selectedId,
+                remark,
+            });
+
+            setRemark('');
+
+            toast.success('Rejected.', {
+                title: 'Rejected.',
+                duration: 3000,
+                variant: 'variant3',
+            });
+
+            getPendingData();
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    }
+
+    const rejectWithdraw = (id) => {
+        setSelectedId(id)
+
+        confirmDialog({
+            group: 'reject',
+            message: 'Are you sure you want to Reject this transaction?',
+            header: 'Reject',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept: reject,
+            reject: cancelReject,
+            
+        });
+
     }
 
     const actionDiv = (action) => {
@@ -61,7 +107,7 @@ export default function PendingTable() {
                         <CheckIcon />
                     </Tooltip>
                 </div>
-                <div className="flex justify-center items-center cursor-pointer text-red-500 hover:text-red-600 w-5 h-5 rounded-full hover:bg-gray-100">
+                <div className="flex justify-center items-center cursor-pointer text-red-500 hover:text-red-600 w-5 h-5 rounded-full hover:bg-gray-100" onClick={() => rejectWithdraw(action.id)}>
                     <Tooltip text="Reject">
                         <RejectIcon />
                     </Tooltip>
@@ -70,26 +116,40 @@ export default function PendingTable() {
         )
     }
 
+    const { data, setData, post, processing, errors, reset } = useForm({
+        wallet_address: '',
+        txid: '',
+        transaction_id: modalData ? modalData.id : '',
+    });
+
     const submit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        // post('/item/new-item', {
-        //     preserveScroll: true,
-        //     onSuccess: () => {
-        //         reset();
-        //         setIsOpen(false)
-        //         setIsLoading(false);
-        //         if (itemAdded) {
-        //             itemAdded();
-        //         }
-        //         toast.success('Item added successfully.', {
-        //             title: 'Item added successfully.',
-        //             description: 'This item has been added to your item listing.',
-        //             duration: 3000,
-        //             variant: 'variant1',
-        //         });
-        //     }
-        // })
+        post('/approveWithdrawal', {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+                setIsOpen(false)
+                setIsLoading(false);
+                // if (itemAdded) {
+                //     itemAdded();
+                // }
+                toast.success('Withdrawal Approved.', {
+                    title: 'Withdrawal Approved.',
+                    duration: 3000,
+                    variant: 'variant3',
+                });
+            },
+            onError: () => {
+                setIsLoading(false); // Set loading state off in case of an error
+                // toast.error('Error', {
+                //     title: 'Error',
+                //     description: 'Try again later.',
+                //     duration: 3000,
+                //     variant: 'variant1',
+                // });
+            }
+        })
     }
 
     return (
@@ -172,25 +232,39 @@ export default function PendingTable() {
                                             Withdraw Amount: <span className="font-bold">$ {modalData.amount}</span>
                                         </div>
                                     </div>
-                                    <div className="flex flex-col gap-4">
+                                    <div className="flex flex-col gap-4 w-full">
                                         <div className="flex items-center gap-2">
-                                            <div className="min-w-20 w-full">
+                                            <div className="max-w-32 w-full">
                                                 <InputLabel htmlFor="wallet_address" value="Wallet Address: " />
                                             </div>
                                             <div>
                                                 <TextInput 
-                                                
+                                                    id="wallet_address"
+                                                    type="text"
+                                                    name="wallet_address"
+                                                    value={data.wallet_address}
+                                                    className="mt-1 block w-full"
+                                                    isFocused={true}
+                                                    onChange={(e) => setData('wallet_address', e.target.value)}
                                                 />
+                                                <InputError message={errors.wallet_address} className="mt-2" />
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <div className="min-w-20 w-full">
+                                            <div className="max-w-32 w-full">
                                                 <InputLabel htmlFor="txid" value="TXID: " />
                                             </div>
                                             <div>
                                                 <TextInput 
-                                                
+                                                    id="txid"
+                                                    type="text"
+                                                    name="txid"
+                                                    value={data.txid}
+                                                    className="mt-1 block w-full"
+                                                    isFocused={true}
+                                                    onChange={(e) => setData('txid', e.target.value)}
                                                 />
+                                                <InputError message={errors.txid} className="mt-2" />
                                             </div>
                                         </div>
                                     </div>
@@ -199,6 +273,54 @@ export default function PendingTable() {
                         </Modal>
                     )
                 }
+
+                <ConfirmDialog 
+                    group="reject"
+                    content={({ headerRef, contentRef, footerRef, hide, message }) => (
+                        <div className="relative flex flex-col gap-6 items-center p-5 rounded-lg border border-primary-200 max-w-[300px] bg-white">
+                            <div></div>
+                            <div className='flex flex-col gap-3 items-center'>
+                                <div className="font-bold text-lg text-neutral-950 font-sf-pro select-none" ref={headerRef}>
+                                    {message.header}
+                                </div>
+                                <div className='text-neutral-950 text-base font-sf-pro text-center select-none' ref={contentRef}>
+                                    {message.message}
+                                </div>
+                                <div className="w-full flex flex-col space-y-1">
+                                    <InputLabel value='Remark' /> 
+                                    <TextInput 
+                                        className='w-full'
+                                        type='text'
+                                        value={remark}
+                                        onChange={(e) => setRemark(e.target.value)}
+                                    />
+                                    <InputError message={errors.remark} className="mt-2" />
+                                </div>
+                            </div>
+                            <div className="w-full flex items-center gap-2 " ref={footerRef}>
+                                <Button
+                                    onClick={(event) => {
+                                        hide(event);
+                                        cancelReject();
+                                    }}
+                                    size='sm'
+                                    variant='gray-border'
+                                    className="w-full flex justify-center font-sf-pro"
+                                >Cancel</Button>
+                                <Button
+                                    onClick={(event) => {
+                                        hide(event);
+                                        reject();
+                                    }}
+                                    variant="red"
+                                    size='sm'
+                                    className="w-full flex justify-center font-sf-pro bg-[#0060FF]"
+                                >Confirm</Button>
+                                
+                            </div>
+                        </div>
+                    )}
+                />
             </div>
             
         </>

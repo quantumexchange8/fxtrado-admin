@@ -13,7 +13,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
 
     const maxHeightClass = {
         sm: 'sm:h-[500px] xl:h-[700px]',
-        md: 'h-full md:max-h-[500px]',
+        md: 'h-full md:max-h-[600px]',
         lg: 'min-h-[70vh] md:max-h-600px',
         xl: 'sm:h-full max-h-screen md:h-full lg:min-h-auto xl:min-h-[700px]',
     }[maxHeight];
@@ -34,7 +34,7 @@ export default function Modal({ children, show = false, maxWidth = 'md', maxHeig
                 <div className="flex min-h-full justify-center items-center p-1 md:p-4 bg-black/25">
                     <DialogPanel
                         transition
-                        className={`w-full max-w-md rounded-xl bg-white border shadow-md backdrop-blur-2xl duration-150 ease-out data-[closed]:transform-[scale(90%)] data-[closed]:opacity-0 data-[closed]:ease-in ${maxWidthClass} ${maxHeightClass}`}
+                        className={`w-full max-w-md rounded-xl bg-white border shadow-md backdrop-blur-2xl duration-200 ease-out data-[closed]:transform-[scale(90%)] data-[closed]:opacity-0 data-[closed]:ease-in ${maxWidthClass} ${maxHeightClass}`}
                         onClick={(e) => e.stopPropagation()}
                     >
                         <DialogTitle className="m-0 text-lg font-bold text-neutral-950 flex justify-between p-5 bg-white border-b border-gray-100 rounded-t-lg">
