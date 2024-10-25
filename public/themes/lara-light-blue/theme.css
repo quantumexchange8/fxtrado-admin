@@ -6155,6 +6155,7 @@
   min-width: 1.5rem;
   height: 1.5rem;
   line-height: 1.5rem;
+  font-family: 'Inter';
 }
 .p-badge.p-badge-secondary {
   background-color: #64748B;

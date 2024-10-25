@@ -19,7 +19,10 @@ class PendingController extends Controller
     public function getPendingData()
     {
 
-        $pendings = Transaction::where('transaction_type', 'Withdrawal')->where('status', 'processing')->get();
+        $pendings = Transaction::where('transaction_type', 'Withdrawal')
+                    ->where('status', 'processing')
+                    ->with('user:id,name,email')
+                    ->get();
 
         return response()->json($pendings);
     }

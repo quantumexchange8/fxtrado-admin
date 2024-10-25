@@ -21,4 +21,14 @@ class Transaction extends Model
         'remark',
         'approved_at',
     ];
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function wallet(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Wallet::class, 'user_id', 'id');
+    }
 }

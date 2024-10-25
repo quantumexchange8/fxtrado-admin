@@ -16,7 +16,7 @@ export default function Pending() {
     const searchVal = data.search;
 
     return (
-        <AuthenticatedLayout>
+        <AuthenticatedLayout header="Pending">
             <Head title="Pending" />
             <div className="flex flex-col gap-5 md:p-5 md:border md:border-neutral-100 md:bg-white md:shadow-container rounded-lg">
                 <div className="hidden md:block text-neutral-950 text-base font-bold">

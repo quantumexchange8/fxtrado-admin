@@ -5,7 +5,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 // import { EinbillLogo } from "@/Components/Icon/logo";
-import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, PendingIcon, SaleReportIcon, XIcon } from "./Icon/outline";
+import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, PendingIcon, SaleReportIcon, TransactionIcon, XIcon } from "./Icon/outline";
 import { LogoIcon, SmallLogoIcon } from "./Icon/Brand";
 
 export default function SideBar({ user, showingNavigationDropdown, expanded, toggleSidebar }) {
@@ -83,31 +83,31 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                             }
                             
                         </div>
-                        {/* <div >
+                         <div >
                             {
                                 !expanded ? (
-                                    <Link href={route('item.item-listing')} className={`${
-                                        url === '/item/item-listing' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
+                                    <Link href={route('transaction')} className={`${
+                                        url === '/transaction' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
                                     }`}>
-                                        <div className={`${url === '/item/item-listing' ? 'p-3 rounded drop-shadow bg-gray-100 hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                            <ItemListingIcon color='currentColor' className={`${url === '/item/item-listing' ? 'text-primary-700' : 'text-gray-800'}`}/>
+                                        <div className={`${url === '/transaction' ? 'p-3 rounded drop-shadow bg-gray-100 hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                            <TransactionIcon color='currentColor' className={`${url === '/transaction' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                         </div>
                                     </Link>
                                 ) : (
-                                    <Link href={route('item.item-listing')} className={`${
-                                        url === '/item/item-listing' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
+                                    <Link href={route('transaction')} className={`${
+                                        url === '/transaction' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
                                     }`}>
-                                        <div className={`${url === '/item/item-listing' ? "text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
-                                            <ItemListingIcon color='currentColor' className={`${url === '/item/item-listing' ? 'text-primary-700' : 'text-gray-800'}`}/>
+                                        <div className={`${url === '/transaction' ? "text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
+                                            <TransactionIcon color='currentColor' className={`${url === '/transaction' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                             <div className="text-sm">
-                                                Item Listing
+                                                Transactions
                                             </div>
                                         </div>
                                     </Link>
                                 )
                             }
                         </div>
-                        <div >
+                       {/* <div >
                             {
                                 !expanded ? (
                                     <Link href={route('sales.sales-report')} className={`${

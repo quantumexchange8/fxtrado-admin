@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PendingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,7 +27,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/approveWithdrawal', [PendingController::class, 'approveWithdrawal'])->name('approveWithdrawal');
     Route::post('/rejectWithdrawal', [PendingController::class, 'rejectWithdrawal'])->name('rejectWithdrawal');
 
-
+    /**
+     * ==============================
+     *           Transaction
+     * ==============================
+     */
+    Route::get('/transaction', [TransactionController::class, 'transaction'])->name('transaction');
+    Route::get('/getDeposit', [TransactionController::class, 'getDeposit'])->name('getDeposit');
+    Route::get('/getWithdraw', [TransactionController::class, 'getWithdraw'])->name('getWithdraw');
+    
     /**
      * ==============================
      *           Profile

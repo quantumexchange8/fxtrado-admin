@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { formatDateTime } from "@/Composables";
+import { formatAmount, formatDateTime } from "@/Composables";
 import { CheckIcon, RejectIcon, XIcon } from "@/Components/Icon/outline";
 import Tooltip from "@/Components/Tooltip";
 import Modal from "@/Components/Modal";
@@ -44,6 +44,23 @@ export default function PendingTable() {
         return (
             <div>
                 {formatDateTime(date.created_at)}
+            </div>
+        )
+    }
+
+    const userTemplate = (user) => {
+        return (
+            <div className="flex flex-col">
+                <div>{user.user.name}</div>
+                <div>{user.user.email}</div>
+            </div>
+        )
+    }
+
+    const amountTemplate = (amount) => {
+        return (
+            <div>
+                $ {formatAmount(amount.amount)}
             </div>
         )
     }
@@ -171,10 +188,10 @@ export default function PendingTable() {
                                 // onRowClick={selectedRow}
                             >
                                 <Column field="created_at" body={dateTemplate} sortable header="Requested Date"></Column>
-                                <Column field="user_id" header="User" sortable></Column>
+                                <Column field="user_id" header="User" body={userTemplate} sortable></Column>
                                 <Column field="wallet_no" header="Wallet No." sortable></Column>
                                 <Column field="to_wallet" header="Wallet Address" sortable></Column>
-                                <Column field="amount" header="Amount" sortable></Column>
+                                <Column field="amount" header="Amount" body={amountTemplate} sortable></Column>
                                 <Column field="status" header="Status" sortable></Column>
                                 <Column field="actions" header="" body={actionDiv} style={{ minWidth: '50px' }}></Column>
                             </DataTable>
@@ -229,7 +246,7 @@ export default function PendingTable() {
                                             User Wallet: <span className="font-bold">{modalData.to_wallet}</span>
                                         </div>
                                         <div>
-                                            Withdraw Amount: <span className="font-bold">$ {modalData.amount}</span>
+                                            Withdraw Amount: <span className="font-bold">$ {formatAmount(modalData.amount)}</span>
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-4 w-full">
