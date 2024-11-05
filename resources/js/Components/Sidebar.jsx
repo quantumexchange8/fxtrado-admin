@@ -5,7 +5,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 // import { EinbillLogo } from "@/Components/Icon/logo";
-import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, PendingIcon, SaleReportIcon, TransactionIcon, XIcon } from "./Icon/outline";
+import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, PendingIcon, SaleReportIcon, SpreadIcon, TransactionIcon, XIcon } from "./Icon/outline";
 import { LogoIcon, SmallLogoIcon } from "./Icon/Brand";
 
 export default function SideBar({ user, showingNavigationDropdown, expanded, toggleSidebar }) {
@@ -61,6 +61,31 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                         <div >
                             {
                                 !expanded ? (
+                                    <Link href={route('member-listing')} className={`${
+                                        url === '/member-listing' ? 'text-primary-700 font-semibold' : 'text-gray-950'
+                                    }`}>
+                                        <div className={`${url === '/member-listing' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                            <SaleReportIcon color='currentColor' className={`${url === '/member-listing' ? 'text-primary-600' : 'text-gray-800'}`}/>
+                                        </div>
+                                    </Link>
+                                ) : (
+                                    <Link href={route('member-listing')} className={`${
+                                        url === '/member-listing' ? 'text-primary-700 font-semibold' : 'text-gray-950'
+                                    }`}>
+                                        <div className={`${url === '/member-listing' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
+                                            <SaleReportIcon color='currentColor' />
+                                            <div className="text-sm">
+                                                Member Listing
+                                            </div>
+                                        </div>
+                                    </Link>
+                                )
+                            }
+                            
+                        </div>
+                        <div >
+                            {
+                                !expanded ? (
                                     <Link href={route('pending')} className={`${
                                         url === '/pending' ? 'text-secondary-700 font-semibold' : 'text-gray-950'
                                     }`}>
@@ -83,7 +108,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                             }
                             
                         </div>
-                         <div >
+                        <div >
                             {
                                 !expanded ? (
                                     <Link href={route('transaction')} className={`${
@@ -107,32 +132,31 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                 )
                             }
                         </div>
-                       {/* <div >
+                        <div >
                             {
                                 !expanded ? (
-                                    <Link href={route('sales.sales-report')} className={`${
-                                        url === '/sales/sales-report' ? 'text-primary-700 font-semibold' : 'text-gray-950'
+                                    <Link href={route('spread')} className={`${
+                                        url === '/spread' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
                                     }`}>
-                                        <div className={`${url === '/sales/sales-report' ? 'p-3 rounded drop-shadow hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
-                                            <SaleReportIcon color='currentColor' className={`${url === '/sales/sales-report' ? 'text-primary-600' : 'text-gray-800'}`}/>
+                                        <div className={`${url === '/spread' ? 'p-3 rounded drop-shadow bg-gray-100 hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                            <SpreadIcon color='currentColor' className={`${url === '/spread' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                         </div>
                                     </Link>
                                 ) : (
-                                    <Link href={route('sales.sales-report')} className={`${
-                                        url === '/sales/sales-report' ? 'text-primary-700 font-semibold' : 'text-gray-950'
+                                    <Link href={route('spread')} className={`${
+                                        url === '/spread' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
                                     }`}>
-                                        <div className={`${url === '/sales/sales-report' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
-                                            <SaleReportIcon color='currentColor' />
+                                        <div className={`${url === '/spread' ? "text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
+                                            <SpreadIcon color='currentColor' className={`${url === '/spread' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                             <div className="text-sm">
-                                                Sales Report
+                                                Spread Adjustment
                                             </div>
                                         </div>
                                     </Link>
                                 )
                             }
-                            
                         </div>
-                        <div >
+                      {/*  <div >
                             {
                                 !expanded ? (
                                     <Link href={route('admin.my-admin')} className={`${

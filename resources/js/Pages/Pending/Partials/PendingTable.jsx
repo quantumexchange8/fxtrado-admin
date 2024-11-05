@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { formatAmount, formatDateTime } from "@/Composables";
-import { CheckIcon, RejectIcon, XIcon } from "@/Components/Icon/outline";
+import { CheckIcon, CopyIcon, RejectIcon, XIcon } from "@/Components/Icon/outline";
 import Tooltip from "@/Components/Tooltip";
 import Modal from "@/Components/Modal";
 import Button from "@/Components/Button";
@@ -22,6 +22,7 @@ export default function PendingTable() {
     const [pendingData, setPendingData] = useState([]);
     const [selectedId, setSelectedId] = useState(null);
     const [remark, setRemark] = useState('');
+    const [tooltipText, setTooltipText] = useState('copy');
 
     const getPendingData = async () => {
         try {
@@ -169,6 +170,21 @@ export default function PendingTable() {
         })
     }
 
+    const handleCopy = (wallet_address) => {
+        const textToCopy = wallet_address;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            setTooltipText('Copied!');
+            console.log('Copied to clipboard:', textToCopy);
+
+            // Revert tooltip text back to 'copy' after 2 seconds
+            setTimeout(() => {
+                setTooltipText('copy');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+        });
+    };
+    
     return (
         <>
             <div>
@@ -242,8 +258,16 @@ export default function PendingTable() {
                                 </div>
                                 <div className="flex flex-col items-center gap-2 p-1">
                                     <div className="flex flex-col items-center gap-2">
-                                        <div>
-                                            User Wallet: <span className="font-bold">{modalData.to_wallet}</span>
+                                        <div className="flex gap-1 items-center">
+                                            <span>User Wallet: </span>
+                                            <div className="flex items-center font-bold gap-1">
+                                                <span>{modalData.to_wallet}</span>
+                                                <div onClick={() => handleCopy(modalData.to_wallet)}>
+                                                    <Tooltip text={tooltipText}>
+                                                        <CopyIcon />
+                                                    </Tooltip>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
                                             Withdraw Amount: <span className="font-bold">$ {formatAmount(modalData.amount)}</span>
