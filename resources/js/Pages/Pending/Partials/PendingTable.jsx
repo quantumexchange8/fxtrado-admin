@@ -69,7 +69,7 @@ export default function PendingTable() {
     const approveModal = (action) => {
         setIsOpen(true);
         setModalData(action)
-
+        setData('transaction_id', action.id)
     }
 
     const closeApproveModal = () => {

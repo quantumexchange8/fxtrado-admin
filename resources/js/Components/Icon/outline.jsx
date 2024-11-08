@@ -316,6 +316,14 @@ const SpreadIcon = ({ className }) => {
     );
 }
 
+const OngoingOrderIcon = ({ className }) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 22 22" fill="none">
+            <path d="M8.5 6.5H12.75C13.9926 6.5 15 7.50736 15 8.75C15 9.99264 13.9926 11 12.75 11H8.5H13.25C14.4926 11 15.5 12.0074 15.5 13.25C15.5 14.4926 14.4926 15.5 13.25 15.5H8.5M8.5 6.5H7M8.5 6.5V15.5M8.5 15.5H7M9 5V6.5M9 15.5V17M12 5V6.5M12 15.5V17M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
+}
+
 
 
 export { 
@@ -354,4 +362,5 @@ export {
     DotHorizontalIcon,
     CopyIcon,
     SpreadIcon,
+    OngoingOrderIcon,
 };

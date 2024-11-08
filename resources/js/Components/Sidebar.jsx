@@ -5,7 +5,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 // import { EinbillLogo } from "@/Components/Icon/logo";
-import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, PendingIcon, SaleReportIcon, SpreadIcon, TransactionIcon, XIcon } from "./Icon/outline";
+import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, OngoingOrderIcon, PendingIcon, SaleReportIcon, SpreadIcon, TransactionIcon, XIcon } from "./Icon/outline";
 import { LogoIcon, SmallLogoIcon } from "./Icon/Brand";
 
 export default function SideBar({ user, showingNavigationDropdown, expanded, toggleSidebar }) {
@@ -150,6 +150,30 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                             <SpreadIcon color='currentColor' className={`${url === '/spread' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                             <div className="text-sm">
                                                 Spread Adjustment
+                                            </div>
+                                        </div>
+                                    </Link>
+                                )
+                            }
+                        </div>
+                        <div >
+                            {
+                                !expanded ? (
+                                    <Link href={route('orders')} className={`${
+                                        url === '/orders' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
+                                    }`}>
+                                        <div className={`${url === '/orders' ? 'p-3 rounded drop-shadow bg-gray-100 hover:bg-gray-50 hover:rounded hover:drop-shadow-md' : 'p-3 hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'}`}>
+                                            <OngoingOrderIcon color='currentColor' className={`${url === '/orders' ? 'text-primary-700' : 'text-gray-800'}`}/>
+                                        </div>
+                                    </Link>
+                                ) : (
+                                    <Link href={route('orders')} className={`${
+                                        url === '/orders' ? 'text-primary-700 font-bold' : 'text-gray-950 font-medium'
+                                    }`}>
+                                        <div className={`${url === '/orders' ? "text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
+                                            <OngoingOrderIcon color='currentColor' className={`${url === '/orders' ? 'text-primary-700' : 'text-gray-800'}`}/>
+                                            <div className="text-sm">
+                                                Ongoing Orders
                                             </div>
                                         </div>
                                     </Link>

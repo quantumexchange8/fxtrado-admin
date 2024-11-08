@@ -13,6 +13,7 @@ import { InputIcon } from 'primereact/inputicon';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import InputIconWrapper from "@/Components/InputIconWrapper";
 import InputError from "@/Components/InputError";
+import { Switch } from '@headlessui/react'
 
 export default function SpreadTable() {
 
@@ -101,6 +102,55 @@ export default function SpreadTable() {
             }
         });
     };
+
+    const statusTemplate = (rowData) => {
+
+        const [enabled, setEnabled] = useState(rowData.status === 'active' ? true : false)
+
+        useEffect(() => {
+            setEnabled(rowData.status === 'active'); 
+        }, [rowData]);
+
+        const handleChange = async (checked) => {
+            
+            const id = rowData.id;
+
+            try {
+
+                setEnabled(rowData.status === 'active' ? false : true);
+
+                await axios.post('/updateSpreadStatus', {
+                    id: id,
+                });
+
+                fetchData();
+
+            } catch (error) {
+                console.error('Error updating status:', error);
+                setEnabled(!checked);
+            }
+        };
+
+        const value = rowData;
+        const isChecked = rowData.status === 'active';
+
+        return (
+            <div className="flex align-items-center gap-4">
+                <div className="flex items-center">
+                    <Switch
+                        checked={enabled}
+                        onChange={() => handleChange(rowData.id)}
+                        className="group relative flex h-7 w-12 cursor-pointer rounded-full bg-gray-200 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-green-400"
+                    >
+                        <span
+                            aria-hidden="true"
+                            className="pointer-events-none inline-block size-5 translate-x-0 rounded-full bg-white ring-0 shadow-lg transition duration-200 ease-in-out group-data-[checked]:translate-x-5"
+                        />
+                    </Switch>
+                </div>
+            </div>
+        )
+    }
     
     
 
@@ -152,6 +202,7 @@ export default function SpreadTable() {
                             header={header} 
                             filters={filters}
                         >
+                            {/* <Column field="status" body={statusTemplate} header="Status"></Column> */}
                             <Column field="symbol" sortable header="Symbol"></Column>
                             <Column field="group_name" sortable header="Group"></Column>
                             <Column field="spread" sortable header="Spread"></Column>
@@ -190,8 +241,7 @@ export default function SpreadTable() {
                                         <InputLabel value='Spread' />
                                         <InputNumber 
                                             inputId="integeronly" 
-                                            value={spread.spread} 
-                                            min={0}
+                                            value={spread.spread}
                                             onValueChange={(e) => setData('spread', e.value)}
                                             className="w-full font-bold border border-neutral-100 rounded-md focus:outline-none focus:ring-0"
                                         />

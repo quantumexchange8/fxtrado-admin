@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
      */
 
      Route::get('/orders', [OpenController::class, 'orders'])->name('orders');
+     Route::get('/getOrder', [OpenController::class, 'getOrder'])->name('getOrder');
 
      /**
      * ==============================
@@ -74,6 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/spread-adjustment', [SpreadController::class, 'spread'])->name('spread');
     Route::get('/getSpread', [SpreadController::class, 'getSpread'])->name('getSpread');
     Route::post('/updateSpread', [SpreadController::class, 'updateSpread'])->name('updateSpread');
+    Route::post('/updateSpreadStatus', [SpreadController::class, 'updateSpreadStatus'])->name('updateSpreadStatus');
     
     /**
      * ==============================
