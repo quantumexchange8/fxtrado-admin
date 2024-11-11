@@ -53,7 +53,13 @@ export default function OrderTable() {
     };
 
     const profitTemplate = (rowData) => {
-        return <span>{rowData.profit}</span>;
+
+        return (
+            <div className="flex justify-between">
+                {rowData.profit >= 0 && (<span className="text-green-700">+{rowData.profit}</span>)}
+                {rowData.profit < 0 && (<span className="text-red-500">{rowData.profit}</span>)}
+            </div>
+        );
     };
 
     const renderHeader = () => {

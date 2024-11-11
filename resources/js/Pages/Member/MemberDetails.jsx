@@ -11,6 +11,7 @@ import { DotHorizontalIcon, EditIcon, XIcon } from "@/Components/Icon/outline";
 import Modal from "@/Components/Modal";
 import { RadioButton } from "primereact/radiobutton";
 import { InputNumber } from 'primereact/inputnumber';
+import toast from "react-hot-toast";
 
 export default function MemberDetails({ user }) {
 
@@ -40,6 +41,7 @@ export default function MemberDetails({ user }) {
 
     const { data, setData, post, processing, errors, reset } = useForm({
         user_id: user.id,
+        wallet_id: '',
         password: '',
         password_confirmation: '',
         wallet_type: '',
@@ -57,6 +59,7 @@ export default function MemberDetails({ user }) {
     const walletAdjustment = (wallet) => {
         setIsOpen(true)
         setWalletData(wallet)
+        setData('wallet_id', wallet.id)
     }
 
     const closeWallet = () => {
@@ -64,20 +67,21 @@ export default function MemberDetails({ user }) {
         setAmountVal(0)
     }
 
-    const submitWallet = (e) => {
-        e.preventDefault();
+    const submitWallet = () => {
         setIsLoading(true);
 
         post('/walletAdjustment', {
-            walletData: {
-                type: walletType,   // Add wallet type to request data
-                amount: amountVal   // Add amount to request data
-            },
+            
             preserveScroll: true,
             onSuccess: () => {
                 setIsLoading(false);
                 reset();
                 closeWallet();
+                toast.success('Wallet Adjusted.', {
+                    title: 'Wallet Adjusted.',
+                    duration: Infinity,
+                    variant: 'variant1',
+                });
             }
         })
     }
@@ -233,7 +237,6 @@ export default function MemberDetails({ user }) {
                                         variant="primary"
                                         size="lg"
                                         onClick={submitWallet}
-                                        disabled={true}
                                     >Save
                                     </Button>
                                 </div>
@@ -253,11 +256,23 @@ export default function MemberDetails({ user }) {
                                 <InputLabel value='Type' />
                                 <div className="flex flex-wrap justify-center gap-8">
                                     <div className="flex align-items-center">
-                                        <RadioButton inputId="ingredient1" name="pizza" value="balance_in" onChange={(e) => setWalletType(e.value)} checked={walletType === 'balance_in'} />
+                                        <RadioButton 
+                                            inputId="ingredient1" 
+                                            name="wallet_type" 
+                                            value='balance_in'
+                                            onChange={(e) => setData('wallet_type', e.target.value)} 
+                                            checked={data.wallet_type === 'balance_in'} 
+                                        />
                                         <label htmlFor="ingredient1" className="ml-2 select-none">Balance In</label>
                                     </div>
                                     <div className="flex align-items-center">
-                                        <RadioButton inputId="ingredient2" name="pizza" value="balance_out" onChange={(e) => setWalletType(e.value)} checked={walletType === 'balance_out'} />
+                                        <RadioButton 
+                                            inputId="ingredient2" 
+                                            name="wallet_type" 
+                                            value='balance_out'
+                                            onChange={(e) => setData('wallet_type', e.target.value)} 
+                                            checked={data.wallet_type === 'balance_out'} 
+                                        />
                                         <label htmlFor="ingredient2" className="ml-2 select-none">Balance Out</label>
                                     </div>
                                 </div>
@@ -266,8 +281,8 @@ export default function MemberDetails({ user }) {
                                 <InputLabel value='Amount' />
                                 <InputNumber 
                                     inputId="amount" 
-                                    value={amountVal} 
-                                    onValueChange={(e) => setAmountVal( e.value)} 
+                                    value={data.amount} 
+                                    onValueChange={(e) => setData('amount', e.target.value)} 
                                     mode="currency" 
                                     currency="USD" 
                                     locale="en-US" 
