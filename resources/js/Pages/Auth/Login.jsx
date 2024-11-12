@@ -7,9 +7,12 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
-
+import { useTranslation } from 'react-i18next';
 
 export default function Login({ status, canResetPassword }) {
+
+    const { t } = useTranslation();
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -39,7 +42,7 @@ export default function Login({ status, canResetPassword }) {
 
                 <form onSubmit={submit}>
                     <div>
-                        <InputLabel htmlFor="email" value="Email" />
+                        <InputLabel htmlFor="email" value={<span>{t('email')}</span>} />
 
                         <TextInput
                             id="email"
@@ -56,7 +59,7 @@ export default function Login({ status, canResetPassword }) {
                     </div>
 
                     <div className="mt-4">
-                        <InputLabel htmlFor="password" value="Password" />
+                        <InputLabel htmlFor="password" value={<span>{t('password')}</span>} />
 
                         <TextInput
                             id="password"
@@ -71,7 +74,7 @@ export default function Login({ status, canResetPassword }) {
                         <InputError message={errors.password} className="mt-2" />
                     </div>
 
-                    <div className="mt-4 block">
+                    {/* <div className="mt-4 block">
                         <label className="flex items-center">
                             <Checkbox
                                 name="remember"
@@ -81,10 +84,10 @@ export default function Login({ status, canResetPassword }) {
                                 }
                             />
                             <span className="ms-2 text-sm text-gray-600">
-                                Remember me
+                                {t('remember_me')}Remember me
                             </span>
                         </label>
-                    </div>
+                    </div> */}
 
                     <div className="mt-4 flex items-center justify-end">
                         {/* {canResetPassword && (
@@ -97,7 +100,7 @@ export default function Login({ status, canResetPassword }) {
                         )} */}
 
                         <Button size='lg' variant='gray-primary' className='text-base' disabled={processing}>
-                            Log in
+                            {t('log_in')}
                         </Button>
                     </div>
                 </form>

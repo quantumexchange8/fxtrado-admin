@@ -14,6 +14,7 @@ import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import InputIconWrapper from "@/Components/InputIconWrapper";
 import InputError from "@/Components/InputError";
 import { Switch } from '@headlessui/react'
+import { useTranslation } from 'react-i18next';
 
 export default function SpreadTable() {
 
@@ -26,7 +27,8 @@ export default function SpreadTable() {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
     });
-
+    const { t } = useTranslation();
+    
     const getSpread = async () => {
         try {
           const response = await axios.get('/getSpread');
@@ -169,7 +171,7 @@ export default function SpreadTable() {
                         <TextInput 
                             value={globalFilterValue} 
                             onChange={onGlobalFilterChange} 
-                            placeholder="Keyword Search"
+                            placeholder={t('search')}
                             withIcon
                             className='font-medium'
                         />
@@ -203,16 +205,16 @@ export default function SpreadTable() {
                             filters={filters}
                         >
                             {/* <Column field="status" body={statusTemplate} header="Status"></Column> */}
-                            <Column field="symbol" sortable header="Symbol"></Column>
-                            <Column field="group_name" sortable header="Group"></Column>
-                            <Column field="spread" sortable header="Spread"></Column>
+                            <Column field="symbol" sortable header={<span>{t('symbol')}</span>}></Column>
+                            <Column field="group_name" sortable header={<span>{t('group')}</span>} ></Column>
+                            <Column field="spread" sortable header={<span>{t('spread')}</span>} ></Column>
                             <Column field="actions" header="" body={actionDiv} style={{ minWidth: '50px' }}></Column>
                         </DataTable>
 
                         {
                             spread && (
                                 <Modal
-                                    title='Spread Adjustment'
+                                    title={<span>{t('spread_adjustment')}</span>}
                                     maxWidth='md'
                                     maxHeight='md' 
                                     isOpen={isOpen} close={closeSpread}
@@ -224,21 +226,21 @@ export default function SpreadTable() {
                                                     variant="gray-border"
                                                     size="lg"
                                                     onClick={closeSpread}
-                                                >Cancel</Button>
+                                                >{t('cancel')}</Button>
                                             </div>
                                             <div>
                                                 <Button
                                                     variant="primary"
                                                     size="lg"
                                                     onClick={submit}
-                                                >Save
+                                                >{t('save')}
                                                 </Button>
                                             </div>
                                         </div>
                                     }
                                 >
                                     <div className="p-3 space-y-2">
-                                        <InputLabel value='Spread' />
+                                        <InputLabel value={<span>{t('spread')}</span>} />
                                         <InputNumber 
                                             inputId="integeronly" 
                                             value={spread.spread}

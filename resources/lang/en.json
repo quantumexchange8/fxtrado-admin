@@ -1,0 +1,6 @@
+{
+    "email_required": "The email field is required",
+    "email_invalid": "The email must be a valid email address",
+    "password_required": "The password field is required",
+    "failed": "The credentials you provided do not match our records"
+}

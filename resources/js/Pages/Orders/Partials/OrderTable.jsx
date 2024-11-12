@@ -7,6 +7,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { EditIcon, Search, XIcon } from "@/Components/Icon/outline";
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
+import { useTranslation } from 'react-i18next';
 
 export default function OrderTable() {
 
@@ -17,6 +18,7 @@ export default function OrderTable() {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         name: { value: null, matchMode: FilterMatchMode.STARTS_WITH }
     });
+    const { t } = useTranslation();
 
     const getOrder = async () => {
         try {
@@ -77,7 +79,7 @@ export default function OrderTable() {
                         <TextInput 
                             value={globalFilterValue} 
                             onChange={onGlobalFilterChange} 
-                            placeholder="Keyword Search"
+                            placeholder={t('search')}
                             withIcon
                             className='font-medium'
                         />
@@ -109,11 +111,11 @@ export default function OrderTable() {
                             header={header} 
                             filters={filters}
                         >
-                            <Column field="order_id" sortable header="Order ID"></Column>
-                            <Column field="group_name" sortable header="Group"></Column>
-                            <Column field="symbol" sortable header="Symbol"></Column>
-                            <Column field="price" sortable header="Open Price"></Column>
-                            <Column field="profit" sortable body={profitTemplate} header="Profit/Loss"></Column>
+                            <Column field="order_id" sortable header={<span>{t('order_id')}</span>}></Column>
+                            <Column field="group_name" sortable header={<span>{t('group')}</span>} ></Column>
+                            <Column field="symbol" sortable header={<span>{t('symbol')}</span>} ></Column>
+                            <Column field="price" sortable header={<span>{t('open_price')}</span>} ></Column>
+                            <Column field="profit" sortable body={profitTemplate} header={<span>{t('profit_loss')}</span>} ></Column>
                         </DataTable>
                     </div>
                 ) : (

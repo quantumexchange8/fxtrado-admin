@@ -42,7 +42,7 @@ class SpreadController extends Controller
     public function updateSpreadStatus(Request $request)
     {
 
-        dd($request->all());
+        // dd($request->all());
 
         return redirect()->back();
     }

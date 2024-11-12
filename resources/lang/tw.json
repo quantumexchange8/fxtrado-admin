@@ -1,0 +1,6 @@
+{
+    "email_required": "電子郵件欄位為必填項",
+    "email_invalid": "電子郵件必須是有效的電子郵件地址",
+    "password_required": "密碼欄位為必填項",
+    "failed": "您提供的憑證與我們的記錄不符"
+}

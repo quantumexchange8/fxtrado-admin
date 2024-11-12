@@ -6,6 +6,7 @@ import Tooltip from "@/Components/Tooltip";
 import { CheckIcon, RejectIcon, ViewDetialIcon, XIcon } from "@/Components/Icon/outline";
 import { Badge } from 'primereact/badge';
 import Modal from "@/Components/Modal";
+import { useTranslation } from 'react-i18next';
 
 export default function DepositTable() {
 
@@ -13,7 +14,8 @@ export default function DepositTable() {
     const [depositData, setDepositData] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [modalData, setModalData] = useState(null);
-    
+    const { t } = useTranslation();
+
     const getDepositData = async () => {
         try {
             const response = await axios.get('/getDeposit');
@@ -62,28 +64,28 @@ export default function DepositTable() {
                 {
                     status.status === 'processing' && (
                         <>
-                            <Badge value="Processing" severity="contrast"></Badge>
+                            <Badge value={t('processing')} severity="contrast"></Badge>
                         </>
                     )
                 }
                 {
                     status.status === 'successful' && (
                         <>
-                            <Badge value="Success" severity="success"></Badge>
+                            <Badge value={t('success')} severity="success"></Badge>
                         </>
                     )
                 }
                 {
                     status.status === 'failed' && (
                         <>
-                            <Badge value="Failed" severity="danger"></Badge>
+                            <Badge value={t('fail')} severity="danger"></Badge>
                         </>
                     )
                 }
                 {
                     status.status === 'rejected' && (
                         <>
-                            <Badge value="Failed" severity="danger"></Badge>
+                            <Badge value={t('rejected')} severity="danger"></Badge>
                         </>
                     )
                 }
@@ -130,11 +132,11 @@ export default function DepositTable() {
                                 // filters={filters}
                                 // onRowClick={selectedRow}
                             >
-                                <Column field="created_at" body={dateTemplate} sortable header="Requested Date"></Column>
-                                <Column field="user_id" header="User" body={userTemplate} sortable></Column>
+                                <Column field="created_at" body={dateTemplate} sortable header={<span>{t('requested_date')}</span>}></Column>
+                                <Column field="user_id" header={<span>{t('user')}</span>} body={userTemplate} sortable></Column>
                                 <Column field="transaction_number" header="ID" sortable></Column>
-                                <Column field="amount" header="Amount" body={amountTemplate} sortable></Column>
-                                <Column field="status" header="Status" body={statusTemplate} sortable></Column>
+                                <Column field="amount" header={<span>{t('amount')}</span>} body={amountTemplate} sortable></Column>
+                                <Column field="status" header={<span>{t('status')}</span>} body={statusTemplate} sortable></Column>
                                 <Column field="actions" header="" body={actionDiv} style={{ minWidth: '50px' }}></Column>
                             </DataTable>
                         </>
@@ -149,7 +151,7 @@ export default function DepositTable() {
             {
                 isOpen && (
                     <Modal
-                        title='Deposit Details'
+                        title={<span>{t('deposit_details')}</span>}
                         maxWidth='md'
                         maxHeight='md' 
                         isOpen={isOpen} close={closeDetail}
@@ -157,22 +159,22 @@ export default function DepositTable() {
                     >
                         <div className="flex flex-col gap-4 p-4">
                             <div className="grid grid-cols-3 items-center gap-3 p-1">
-                                <div className="col-span-1 text-sm text-gray-500">Transaction Date</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('transaction_date')}</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold">{formatDateTime(modalData.created_at)}</div>
 
-                                <div className="col-span-1 text-sm text-gray-500">Transaction ID</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('transaction')} ID</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold">{modalData.transaction_number}</div>
 
-                                <div className="col-span-1 text-sm text-gray-500">User</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('user')}</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold">{modalData.user.email}</div>
 
-                                <div className="col-span-1 text-sm text-gray-500">Wallet No.</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('wallet_no')}</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold">{modalData.wallet.wallet_no}</div>
 
-                                <div className="col-span-1 text-sm text-gray-500">Amount</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('amount')}</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold">$ {modalData.amount ? formatAmount(modalData.amount) : '0.00'}</div>
 
-                                <div className="col-span-1 text-sm text-gray-500">Status</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('status')}</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold">
                                         {
                                             modalData.status === 'processing' && (
@@ -184,36 +186,36 @@ export default function DepositTable() {
                                         {
                                             modalData.status === 'successful' && (
                                                 <>
-                                                    <Badge value="Success" severity="success"></Badge>
+                                                    <Badge value={t('success')} severity="success"></Badge>
                                                 </>
                                             )
                                         }
                                         {
                                             modalData.status === 'failed' && (
                                                 <>
-                                                    <Badge value="Failed" severity="danger"></Badge>
+                                                    <Badge value={t('fail')} severity="danger"></Badge>
                                                 </>
                                             )
                                         }
                                         {
                                             modalData.status === 'rejected' && (
                                                 <>
-                                                    <Badge value="Failed" severity="danger"></Badge>
+                                                    <Badge value={t('rejected')} severity="danger"></Badge>
                                                 </>
                                             )
                                         }
                                 </div>
 
-                                <div className="col-span-1 text-sm text-gray-500">Sent Address</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('send_address')}</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold truncate">{modalData.from_wallet ? modalData.from_wallet : '-'}</div>
 
-                                <div className="col-span-1 text-sm text-gray-500">Receiving Address</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('receiving_address')}</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold truncate">{modalData.to_wallet ? modalData.to_wallet : '-'}</div>
 
                                 <div className="col-span-1 text-sm text-gray-500">TxID</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold truncate">{modalData.txid ? modalData.txid : '-'}</div>
 
-                                <div className="col-span-1 text-sm text-gray-500">Remark</div>
+                                <div className="col-span-1 text-sm text-gray-500">{t('remark')}</div>
                                 <div className="col-span-2 text-gray-700 text-sm font-bold">{modalData.remark ? modalData.remark : '-'}</div>
                             </div>
                         </div>

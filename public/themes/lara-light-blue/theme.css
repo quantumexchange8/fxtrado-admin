@@ -755,13 +755,13 @@
   border-radius: 6px;
 }
 .p-dropdown:not(.p-disabled):hover {
-  border-color: #3B82F6;
+  border-color: #ffffff;
 }
 .p-dropdown:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #BFDBFE;
-  border-color: #3B82F6;
+  box-shadow: 0 0 0 0.2rem #FAFAFA;
+  /* border-color: #3B82F6; */
 }
 .p-dropdown.p-dropdown-clearable .p-dropdown-label {
   padding-right: 1.75rem;
@@ -6279,7 +6279,7 @@
 } */
 
 .p-column-title {
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   font-weight: 700;
 }

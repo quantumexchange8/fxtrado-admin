@@ -6,8 +6,11 @@ import { ExportIcon, PlusIcon, Search } from "@/Components/Icon/outline";
 import SearchInput from "@/Components/SearchInput";
 import Button from "@/Components/Button";
 import PendingTable from "./Partials/PendingTable";
+import { useTranslation } from 'react-i18next';
 
 export default function Pending() {
+
+    const { t } = useTranslation();
 
     const { data, setData, post, processing, errors, reset } = useForm({
         search: '',
@@ -16,11 +19,11 @@ export default function Pending() {
     const searchVal = data.search;
 
     return (
-        <AuthenticatedLayout header="Pending">
+        <AuthenticatedLayout header={<span>{t('pending')}</span>}>
             <Head title="Pending" />
             <div className="flex flex-col gap-5 md:p-5 md:border md:border-neutral-100 md:bg-white md:shadow-container rounded-lg">
                 <div className="hidden md:block text-neutral-950 text-base font-bold">
-                    Pending Transaction
+                    {t('pending_transaction')}
                 </div>
 
                 <div className="flex flex-col md:flex-row justify-between gap-5">
@@ -42,7 +45,7 @@ export default function Pending() {
                                 isFocused={false}
                                 handleChange={(e) => setData('search', e.target.value)}
                                 hasError={!!errors.search}
-                                placeholder='Search...'
+                                placeholder={t('search')}
                                 withIcon
                                 size='lg'
                             />

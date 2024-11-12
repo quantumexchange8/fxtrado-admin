@@ -6,6 +6,7 @@ import { formatDateTime } from "@/Composables";
 import { ViewDetialIcon } from "@/Components/Icon/outline";
 import Tooltip from "@/Components/Tooltip";
 import { Link } from "@inertiajs/react";
+import { useTranslation } from 'react-i18next';
 
 export default function MemberTable() {
 
@@ -107,6 +108,7 @@ export default function MemberTable() {
         )
     }
 
+    const { t } = useTranslation();
 
     return (
         <>
@@ -126,9 +128,9 @@ export default function MemberTable() {
                                 // filters={filters}
                                 // onRowClick={selectedRow}
                             >
-                                <Column field="name" body={userTemplate} sortable header="Member"></Column>
-                                <Column field="phone_number" body={phoneTemplate} sortable header="Phone"></Column>
-                                <Column field="created_at" body={dateTemplate} sortable header="Joined Date"></Column>
+                                <Column field="name" body={userTemplate} sortable header={<span>{t('member')}</span>}></Column>
+                                <Column field="phone_number" body={phoneTemplate} sortable header={<span>{t('phone')}</span>}></Column>
+                                <Column field="created_at" body={dateTemplate} sortable header={<span>{t('joined_date')}</span>}></Column>
                                 {/* <Column field="status" body={statusTemplate} sortable header="Status"></Column> */}
                                 <Column field="actions" header="" body={actionDiv} style={{ minWidth: '50px' }}></Column>
                             </DataTable>

@@ -7,10 +7,12 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 // import { EinbillLogo } from "@/Components/Icon/logo";
 import { AdminUserIcon, ConfigIcon, DashboardIcon, EinvoiceIcon, ItemListingIcon, MyBillingIcon, OngoingOrderIcon, PendingIcon, SaleReportIcon, SpreadIcon, TransactionIcon, XIcon } from "./Icon/outline";
 import { LogoIcon, SmallLogoIcon } from "./Icon/Brand";
+import { useTranslation } from 'react-i18next';
 
 export default function SideBar({ user, showingNavigationDropdown, expanded, toggleSidebar }) {
 
     const { url } = usePage();
+    const { t } = useTranslation();
 
     return (
         <>
@@ -51,7 +53,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                         <div className={`${url === '/dashboard' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <DashboardIcon color='currentColor' />
                                             <div className="text-sm">
-                                                Dashboard
+                                                {t('dashboard')}
                                             </div>
                                         </div>
                                     </Link>
@@ -75,7 +77,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                         <div className={`${url === '/member-listing' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <SaleReportIcon color='currentColor' />
                                             <div className="text-sm">
-                                                Member Listing
+                                            {t('member_listing')}
                                             </div>
                                         </div>
                                     </Link>
@@ -100,7 +102,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                         <div className={`${url === '/pending' ? 'text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md' : 'py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md'} `}>
                                             <PendingIcon color='currentColor' className='w-5 h-5' />
                                             <div className="text-sm">
-                                                Pending
+                                                {t('pending')}
                                             </div>
                                         </div>
                                     </Link>
@@ -125,7 +127,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                         <div className={`${url === '/transaction' ? "text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
                                             <TransactionIcon color='currentColor' className={`${url === '/transaction' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                             <div className="text-sm">
-                                                Transactions
+                                                {t('transaction')}
                                             </div>
                                         </div>
                                     </Link>
@@ -149,7 +151,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                         <div className={`${url === '/spread' ? "text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
                                             <SpreadIcon color='currentColor' className={`${url === '/spread' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                             <div className="text-sm">
-                                                Spread Adjustment
+                                                {t('spread_adjustment')}
                                             </div>
                                         </div>
                                     </Link>
@@ -173,7 +175,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                         <div className={`${url === '/orders' ? "text-primary-700 font-bold bg-gray-100 rounded py-3 px-4 flex items-center gap-3 drop-shadow hover:drop-shadow-md" : "py-3 px-4 flex items-center gap-3 font-medium hover:bg-gray-50 hover:rounded hover:text-primary-800 hover:drop-shadow-md" } `}>
                                             <OngoingOrderIcon color='currentColor' className={`${url === '/orders' ? 'text-primary-700' : 'text-gray-800'}`}/>
                                             <div className="text-sm">
-                                                Ongoing Orders
+                                                {t('ongoing_order')}
                                             </div>
                                         </div>
                                     </Link>

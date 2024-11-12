@@ -13,6 +13,7 @@ import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import toast from "react-hot-toast";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { useTranslation } from 'react-i18next';
 
 export default function PendingTable() {
 
@@ -23,6 +24,7 @@ export default function PendingTable() {
     const [selectedId, setSelectedId] = useState(null);
     const [remark, setRemark] = useState('');
     const [tooltipText, setTooltipText] = useState('copy');
+    const { t } = useTranslation();
 
     const getPendingData = async () => {
         try {
@@ -62,6 +64,20 @@ export default function PendingTable() {
         return (
             <div>
                 $ {formatAmount(amount.amount)}
+            </div>
+        )
+    }
+
+    const statusTemplate = (status) => {
+        return (
+            <div>
+                {
+                    status.status === 'processing' && (
+                        <span>
+                            {t('processing')}
+                        </span>
+                    )
+                }
             </div>
         )
     }
@@ -106,8 +122,8 @@ export default function PendingTable() {
 
         confirmDialog({
             group: 'reject',
-            message: 'Are you sure you want to Reject this transaction?',
-            header: 'Reject',
+            message: t('are_you_sure'),
+            header: t('reject'), 
             icon: 'pi pi-exclamation-triangle',
             defaultFocus: 'accept',
             accept: reject,
@@ -173,7 +189,7 @@ export default function PendingTable() {
     const handleCopy = (wallet_address) => {
         const textToCopy = wallet_address;
         navigator.clipboard.writeText(textToCopy).then(() => {
-            setTooltipText('Copied!');
+            setTooltipText('copied');
             console.log('Copied to clipboard:', textToCopy);
 
             // Revert tooltip text back to 'copy' after 2 seconds
@@ -203,12 +219,12 @@ export default function PendingTable() {
                                 // filters={filters}
                                 // onRowClick={selectedRow}
                             >
-                                <Column field="created_at" body={dateTemplate} sortable header="Requested Date"></Column>
-                                <Column field="user_id" header="User" body={userTemplate} sortable></Column>
-                                <Column field="wallet_no" header="Wallet No." sortable></Column>
-                                <Column field="to_wallet" header="Wallet Address" sortable></Column>
-                                <Column field="amount" header="Amount" body={amountTemplate} sortable></Column>
-                                <Column field="status" header="Status" sortable></Column>
+                                <Column field="created_at" body={dateTemplate} sortable header={<span>{t('requested_date')}</span>}></Column>
+                                <Column field="user_id" header={<span>{t('user')}</span>} body={userTemplate} sortable></Column>
+                                <Column field="wallet_no" header={<span>{t('wallet_no')}</span>}sortable></Column>
+                                <Column field="to_wallet" header={<span>{t('wallet_address')}</span>} sortable></Column>
+                                <Column field="amount" header={<span>{t('amount')}</span>} body={amountTemplate} sortable></Column>
+                                <Column field="status" header={<span>{t('status')}</span>} body={statusTemplate} sortable></Column>
                                 <Column field="actions" header="" body={actionDiv} style={{ minWidth: '50px' }}></Column>
                             </DataTable>
                         </>
@@ -222,7 +238,7 @@ export default function PendingTable() {
                 {
                     isOpen && (
                         <Modal
-                            title='Approve Withdrawal'
+                            title={<span>{t('approve_withdrawal')}</span>}
                             maxWidth='md'
                             maxHeight='md' 
                             isOpen={isOpen} close={closeApproveModal}
@@ -236,7 +252,7 @@ export default function PendingTable() {
                                         type="button"
                                         onClick={closeApproveModal}
                                     >
-                                        Cancel
+                                        {t('cancel')}
                                     </Button>
                                     <Button
                                         size="lg"
@@ -244,7 +260,7 @@ export default function PendingTable() {
                                         type="submit"
                                         onClick={submit}
                                     >
-                                        Approve
+                                        {t('approve')}
                                     </Button>
                                 </div>
                             }
@@ -259,24 +275,31 @@ export default function PendingTable() {
                                 <div className="flex flex-col items-center gap-2 p-1">
                                     <div className="flex flex-col items-center gap-2">
                                         <div className="flex gap-1 items-center">
-                                            <span>User Wallet: </span>
+                                            <span>{t('user_wallet')}: </span>
                                             <div className="flex items-center font-bold gap-1">
                                                 <span>{modalData.to_wallet}</span>
                                                 <div onClick={() => handleCopy(modalData.to_wallet)}>
-                                                    <Tooltip text={tooltipText}>
+                                                    <Tooltip text={
+                                                            tooltipText === 'copy' ? (
+                                                                <span>{t('copy')}</span>
+                                                            ) : tooltipText === 'copied' ? (
+                                                                <span>{t('copied')}</span>
+                                                            ) : null
+                                                        }
+                                                    >
                                                         <CopyIcon />
                                                     </Tooltip>
                                                 </div>
                                             </div>
                                         </div>
                                         <div>
-                                            Withdraw Amount: <span className="font-bold">$ {formatAmount(modalData.amount)}</span>
+                                            {t('withdraw_amount')}: <span className="font-bold">$ {formatAmount(modalData.amount)}</span>
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-4 w-full">
                                         <div className="flex items-center gap-2">
                                             <div className="max-w-32 w-full">
-                                                <InputLabel htmlFor="wallet_address" value="Wallet Address: " />
+                                                <InputLabel htmlFor="wallet_address" value={<span>{t('wallet_address')}:</span>} />
                                             </div>
                                             <div>
                                                 <TextInput 
@@ -328,7 +351,7 @@ export default function PendingTable() {
                                     {message.message}
                                 </div>
                                 <div className="w-full flex flex-col space-y-1">
-                                    <InputLabel value='Remark' /> 
+                                    <InputLabel value={<span>{t('remark')}</span>} /> 
                                     <TextInput 
                                         className='w-full'
                                         type='text'
@@ -347,7 +370,7 @@ export default function PendingTable() {
                                     size='sm'
                                     variant='gray-border'
                                     className="w-full flex justify-center font-sf-pro"
-                                >Cancel</Button>
+                                >{t('cancel')}</Button>
                                 <Button
                                     onClick={(event) => {
                                         hide(event);
@@ -356,7 +379,7 @@ export default function PendingTable() {
                                     variant="red"
                                     size='sm'
                                     className="w-full flex justify-center font-sf-pro bg-[#0060FF]"
-                                >Confirm</Button>
+                                >{t('confirm')}</Button>
                                 
                             </div>
                         </div>

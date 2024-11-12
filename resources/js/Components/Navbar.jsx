@@ -7,6 +7,10 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { ConfirmLogoutIcon } from "@/Components/Icon/Brand";
 import Button from './Button';
 import toast from 'react-hot-toast';
+import { Dropdown } from 'primereact/dropdown';
+import { useTranslation } from 'react-i18next';
+import i18n from '@/Composables/i18n';
+
 
 export default function Navbar({ user, header, toggleSidebar }) {
 
@@ -14,6 +18,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [scroll, setScroll] = useState(true)
+    const { t } = useTranslation();
 
     const { data, setData, post, processing, reset } = useForm({});
 
@@ -52,8 +57,8 @@ export default function Navbar({ user, header, toggleSidebar }) {
         
         confirmDialog({
             group: 'navbar',
-            message: 'Are you sure you want to log out from Fxtrado?',
-            header: 'Log Out',
+            message: t('are_you_sure_logout'),
+            header: t('log_out'),
             icon: 'pi pi-exclamation-triangle',
             defaultFocus: 'accept',
             accept: acceptNavbar,
@@ -79,6 +84,20 @@ export default function Navbar({ user, header, toggleSidebar }) {
         );
     };
 
+    const [selectedLocales, setSelectedLocales] = useState(i18n.language);
+
+    const locales = [
+        { name: 'English', value: 'en' },
+        { name: '繁体中文', value: 'tw' },
+    ];
+
+    const toggleLanguage = (langCode) => {
+        // console.log(langCode);
+        i18n.changeLanguage(langCode);
+        localStorage.setItem('i18nextLng', langCode);
+        setSelectedLocales(langCode);
+    };
+
     return (
         <nav className={`sticky top-0 z-20 ease-in duration-500 w-full bg-neutral-50 border-b border-gray-200 md:shadow-navbar py-2 px-3 md:px-4`}>
             <div className='flex items-center justify-between'>
@@ -94,7 +113,14 @@ export default function Navbar({ user, header, toggleSidebar }) {
                 <div className='flex items-center gap-6'>
                     <div className='flex items-center gap-3'>
                         <div className='p-1'>
-                            
+                            <Dropdown 
+                                value={selectedLocales} 
+                                onChange={(e) => toggleLanguage(e.value)} 
+                                options={locales} 
+                                optionLabel="name"
+                                placeholder={t('language')}
+                                className="border-none bg-neutral-50 focus:border-none focus:border-neutral-50" 
+                            />
                         </div>
                         <div className='w-6 h-6 hover:rounded hover:bg-gray-25 hover:shadow flex items-center justify-center cursor-pointer'>
                             <NotificationIcon />
@@ -112,7 +138,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
                             <LogoutIcon />
                         </div>
                     </div>
-                    <div className='hidden md:flex items-center gap-3 p-2 cursor-pointer hover:bg-gray-25 rounded drop-shadow hover:drop-shadow-md' onClick={toggleProfile}>
+                    <div className='hidden md:flex items-center gap-3 p-2 hover:bg-gray-25 rounded drop-shadow hover:drop-shadow-md'>
                         <div className='flex flex-col items-end gap-1'>
                             <div className='text-neutral-950 font-semibold text-sm'>
                                 {auth.user.name}
@@ -191,7 +217,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
                                 size='lg'
                                 variant='secondary'
                                 className="w-full flex justify-center font-sf-pro"
-                            >Cancel</Button>
+                            >{t('cancel')}</Button>
                             <Button
                                 onClick={(event) => {
                                     hide(event);
@@ -200,7 +226,7 @@ export default function Navbar({ user, header, toggleSidebar }) {
                                 }}
                                 size='lg'
                                 className="w-full flex justify-center font-sf-pro bg-[#0060FF]"
-                            >Confirm</Button>
+                            >{t('confirm')}</Button>
                             
                         </div>
                     </div>

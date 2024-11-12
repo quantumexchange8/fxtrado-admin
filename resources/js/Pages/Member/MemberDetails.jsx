@@ -12,6 +12,7 @@ import Modal from "@/Components/Modal";
 import { RadioButton } from "primereact/radiobutton";
 import { InputNumber } from 'primereact/inputnumber';
 import toast from "react-hot-toast";
+import { useTranslation } from 'react-i18next';
 
 export default function MemberDetails({ user }) {
 
@@ -86,6 +87,8 @@ export default function MemberDetails({ user }) {
         })
     }
 
+    const { t } = useTranslation();
+
     return (
         <AuthenticatedLayout
             header={`Member Details - ${user.name}`}
@@ -93,7 +96,7 @@ export default function MemberDetails({ user }) {
             <div className="flex flex-col gap-5">
                 <div className="flex flex-col gap-5 md:p-5 md:border md:border-neutral-100 md:bg-white md:shadow-container rounded-lg">
                     <div className="font-semibold text-base ">
-                        User Profile
+                        {t('user_profile')}
                     </div>
                     <div className="flex gap-4">
                         <div className="p-2 flex flex-col gap-3 w-full">
@@ -110,11 +113,11 @@ export default function MemberDetails({ user }) {
                             </div>
                             <div className="flex flex-col gap-5">
                                 <div className="flex flex-col gap-1">
-                                    <div className="text-gray-600 text-sm">Email</div>
+                                    <div className="text-gray-600 text-sm">{t('email')}</div>
                                     <div className="text-base font-bold">{user.email}</div>
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <div className="text-gray-600 text-sm">Phone</div>
+                                    <div className="text-gray-600 text-sm">{t('phone')}</div>
                                     <div className="text-base font-bold">{user.phone_number ? user.phone_number : '-'}</div>
                                 </div>
 
@@ -145,7 +148,7 @@ export default function MemberDetails({ user }) {
                         <div className="p-2 flex flex-col gap-3 w-full">
                             <form className="flex flex-col gap-3 w-full">
                                 <div className="space-y-2">
-                                    <InputLabel value='Current Password' />
+                                    <InputLabel value={<span>{t('current_password')}</span>} />
                                     <TextInput
                                         id="password"
                                         type="password"
@@ -159,7 +162,7 @@ export default function MemberDetails({ user }) {
                                     <InputError message={errors.password} className="mt-2" />
                                 </div>
                                 <div className="space-y-2">
-                                    <InputLabel value='New Password' />
+                                    <InputLabel value={<span>{t('new_password')}</span>} />
                                     <TextInput
                                         id="password_confirmation"
                                         type="password"
@@ -174,7 +177,7 @@ export default function MemberDetails({ user }) {
                                 </div>
                                 <div>
                                     <Button type="submit" onClick={submit} size="lg">
-                                        Save
+                                        {t('save')}
                                     </Button>
                                 </div>
                             </form>
@@ -184,7 +187,7 @@ export default function MemberDetails({ user }) {
 
                 <div className="flex flex-col gap-5 md:border md:border-neutral-100 md:shadow-container rounded-lg">
                     <div className="font-semibold text-base ">
-                        Wallet Adjustment
+                        {t('wallet_adjustment')}
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -201,7 +204,7 @@ export default function MemberDetails({ user }) {
                                             </div>
                                         </div>
                                         <div className="text-xs font-medium">
-                                            <span className="text-gray-500">Balance: </span>$ {formatAmount(wallet.balance)}
+                                            <span className="text-gray-500">{t('balance')}: </span>$ {formatAmount(wallet.balance)}
                                         </div>
                                     </div>
                                 ))
@@ -218,7 +221,7 @@ export default function MemberDetails({ user }) {
             {
                 walletData && (
                     <Modal
-                        title='Wallet Adjustment'
+                        title={<span>{t('wallet_adjustment')}</span>}
                         maxWidth='md'
                         maxHeight='md' 
                         isOpen={isOpen} close={closeWallet}
@@ -230,14 +233,14 @@ export default function MemberDetails({ user }) {
                                         variant="gray-border"
                                         size="lg"
                                         onClick={closeWallet}
-                                    >Cancel</Button>
+                                    >{t('cancel')}</Button>
                                 </div>
                                 <div>
                                     <Button
                                         variant="primary"
                                         size="lg"
                                         onClick={submitWallet}
-                                    >Save
+                                    >{t('save')}
                                     </Button>
                                 </div>
                             </div>
@@ -246,7 +249,7 @@ export default function MemberDetails({ user }) {
                         <div className="flex flex-col gap-5 p-5">
                             <div className="w-full bg-slate-50 flex flex-col items-center gap-2 rounded-lg p-2">
                                 <div className="text-xs text-gray-500 ">
-                                    {walletData.wallet_no} - Wallet Balance
+                                    {walletData.wallet_no} - {t('wallet_balance')}
                                 </div>
                                 <div className="font-bold text-lg">
                                     $ {formatAmount(walletData.balance)}
@@ -263,7 +266,7 @@ export default function MemberDetails({ user }) {
                                             onChange={(e) => setData('wallet_type', e.target.value)} 
                                             checked={data.wallet_type === 'balance_in'} 
                                         />
-                                        <label htmlFor="ingredient1" className="ml-2 select-none">Balance In</label>
+                                        <label htmlFor="ingredient1" className="ml-2 select-none">{t('balance_in')}</label>
                                     </div>
                                     <div className="flex align-items-center">
                                         <RadioButton 
@@ -273,7 +276,7 @@ export default function MemberDetails({ user }) {
                                             onChange={(e) => setData('wallet_type', e.target.value)} 
                                             checked={data.wallet_type === 'balance_out'} 
                                         />
-                                        <label htmlFor="ingredient2" className="ml-2 select-none">Balance Out</label>
+                                        <label htmlFor="ingredient2" className="ml-2 select-none">{t('balance_out')}</label>
                                     </div>
                                 </div>
                             </div>
