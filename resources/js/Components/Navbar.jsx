@@ -122,9 +122,9 @@ export default function Navbar({ user, header, toggleSidebar }) {
                                 className="border-none bg-neutral-50 focus:border-none focus:border-neutral-50" 
                             />
                         </div>
-                        <div className='w-6 h-6 hover:rounded hover:bg-gray-25 hover:shadow flex items-center justify-center cursor-pointer'>
+                        {/* <div className='w-6 h-6 hover:rounded hover:bg-gray-25 hover:shadow flex items-center justify-center cursor-pointer'>
                             <NotificationIcon />
-                        </div>
+                        </div> */}
                         
                         {/* <ResponsiveNavLink method="post" href={route('logout')} as="button">
                             <div className='w-6 h-6 hover:rounded hover:bg-gray-25 hover:shadow flex items-center justify-center cursor-pointer'>

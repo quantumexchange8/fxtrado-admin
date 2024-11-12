@@ -36,7 +36,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                         </div>
                     )}
                     <div className={`flex flex-col gap-2 ${!expanded ? 'items-center': ''}`}>
-                        <div>
+                        {/* <div>
                             {
                                 !expanded ? (
                                     <Link href={route('dashboard')} className={`${
@@ -59,7 +59,7 @@ export default function SideBar({ user, showingNavigationDropdown, expanded, tog
                                     </Link>
                                 )
                             }  
-                        </div>
+                        </div> */}
                         <div >
                             {
                                 !expanded ? (
