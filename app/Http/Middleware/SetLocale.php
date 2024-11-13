@@ -18,7 +18,7 @@ class SetLocale
     public function handle($request, Closure $next)
     {
         // Check if a language is set in the session or defaults to 'en'
-        $locale = Session::get('locale', 'en');  
+        $locale = $request->query('lang', Session::get('locale', 'en'));
         
         // Set application locale
         App::setLocale($locale);

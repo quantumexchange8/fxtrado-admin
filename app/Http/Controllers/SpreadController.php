@@ -26,7 +26,7 @@ class SpreadController extends Controller
     {
 
         $request->validate([
-            'spread' => ['required', 'regex:/^\d+$/'], // Ensures spread is an integer with no decimal places
+            'spread' => ['required', 'regex:/^-?\d+$/'], // Ensures spread is an integer with no decimal places
         ]);
 
         $spread = GroupSymbol::find($request->id);
