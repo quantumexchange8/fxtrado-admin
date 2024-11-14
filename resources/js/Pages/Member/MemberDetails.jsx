@@ -78,6 +78,7 @@ export default function MemberDetails({ user }) {
                 setIsLoading(false);
                 reset();
                 closeWallet();
+                getMemberWallet();
                 toast.success('Wallet Adjusted.', {
                     title: 'Wallet Adjusted.',
                     duration: Infinity,
