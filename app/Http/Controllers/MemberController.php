@@ -20,7 +20,7 @@ class MemberController extends Controller
     public function getMemberListing()
     {
 
-        $member = User::whereNot('role', 'admin')->get();
+        $member = User::whereNot('role', 'admin')->latest()->get();
 
         return response()->json($member);
     }

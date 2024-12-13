@@ -153,6 +153,7 @@ export default function PendingTable() {
     const { data, setData, post, processing, errors, reset } = useForm({
         wallet_address: '',
         txid: '',
+        remark: '',
         transaction_id: modalData ? modalData.id : '',
     });
 
@@ -168,6 +169,7 @@ export default function PendingTable() {
                 // if (itemAdded) {
                 //     itemAdded();
                 // }
+                getPendingData();
                 toast.success('Withdrawal Approved.', {
                     title: 'Withdrawal Approved.',
                     duration: 3000,
@@ -298,24 +300,7 @@ export default function PendingTable() {
                                     </div>
                                     <div className="flex flex-col gap-4 w-full">
                                         <div className="flex items-center gap-2">
-                                            <div className="max-w-32 w-full">
-                                                <InputLabel htmlFor="wallet_address" value={<span>{t('wallet_address')}:</span>} />
-                                            </div>
-                                            <div>
-                                                <TextInput 
-                                                    id="wallet_address"
-                                                    type="text"
-                                                    name="wallet_address"
-                                                    value={data.wallet_address}
-                                                    className="mt-1 block w-full"
-                                                    isFocused={true}
-                                                    onChange={(e) => setData('wallet_address', e.target.value)}
-                                                />
-                                                <InputError message={errors.wallet_address} className="mt-2" />
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <div className="max-w-32 w-full">
+                                            <div className="max-w-24 w-full">
                                                 <InputLabel htmlFor="txid" value="TXID: " />
                                             </div>
                                             <div>
@@ -329,6 +314,23 @@ export default function PendingTable() {
                                                     onChange={(e) => setData('txid', e.target.value)}
                                                 />
                                                 <InputError message={errors.txid} className="mt-2" />
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="max-w-24 w-full">
+                                                <InputLabel htmlFor="txid" value="Remark: " />
+                                            </div>
+                                            <div>
+                                                <TextInput 
+                                                    id="remark"
+                                                    type="text"
+                                                    name="remark"
+                                                    value={data.remark}
+                                                    className="mt-1 block w-full"
+                                                    isFocused={true}
+                                                    onChange={(e) => setData('remark', e.target.value)}
+                                                />
+                                                <InputError message={errors.remark} className="mt-2" />
                                             </div>
                                         </div>
                                     </div>

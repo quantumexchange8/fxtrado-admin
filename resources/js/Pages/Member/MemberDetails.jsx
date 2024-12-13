@@ -47,6 +47,7 @@ export default function MemberDetails({ user }) {
         password_confirmation: '',
         wallet_type: '',
         amount: '',
+        remark: '',
     });
 
     const submit = (e) => {
@@ -81,7 +82,7 @@ export default function MemberDetails({ user }) {
                 getMemberWallet();
                 toast.success('Wallet Adjusted.', {
                     title: 'Wallet Adjusted.',
-                    duration: Infinity,
+                    duration: 3000,
                     variant: 'variant1',
                 });
             }
@@ -291,6 +292,18 @@ export default function MemberDetails({ user }) {
                                     currency="USD" 
                                     locale="en-US" 
                                     className="w-full font-bold border border-neutral-100 rounded-md focus:outline-none focus:ring-0"
+                                />
+                            </div>
+                            <div className="flex flex-col justify-center gap-3">
+                                <InputLabel value='Remark' />
+                                <TextInput
+                                    id="remark"
+                                    name="remark"
+                                    value={data.remark}
+                                    className="mt-1 block w-full"
+                                    autoComplete="remark"
+                                    isFocused={true}
+                                    onChange={(e) => setData('remark', e.target.value)}
                                 />
                             </div>
                         </div>
